@@ -35,18 +35,11 @@
 					</h1>
 					<hr>
 					<div id="formdiv">
-						<label><b>Title</b></label><br> <input type="text"
-							placeholder="<%= cd.getTitle() %>" name="titlefieldcd" required><br>
-						<label><b>Duration</b></label><br> <input type="text"
-							placeholder="<%= cd.getLength() %>" name="lengthfieldcd" required><br>
-						<label><b>Genre</b></label><br> <input type="text"
-							placeholder="<%= cd.getGenre() %>" name="genrefieldcd" required><br>
-
-						<label><b>Tracks</b></label><br> <input type="text"
-							placeholder="<%= cd.getTracks() %>" name="tracksfield" required><br>
-
-						<label><b>Artists</b></label><br> <input type="text"
-							placeholder="<%= cd.getArtists().toString().replaceAll("\\[|\\]", "") %>" name="artistsfield" required><br>
+						<label><b>Title</b></label><br> <input type="text" placeholder="<%= cd.getTitle() %>" name="titlefieldcd" required><br>
+						<label><b>Duration</b></label><br> <input type="text" name="lengthfieldcd" required><br>
+						<label><b>Genre</b></label><br> <input type="text" name="genrefieldcd" required><br>
+						<label><b>Tracks</b></label><br> <input type="text" name="tracksfield" required><br>
+						<label><b>Artists</b></label><br> <input type="text" name="artistsfield" required><br>
 						<br>
 					</div>
 				</form>

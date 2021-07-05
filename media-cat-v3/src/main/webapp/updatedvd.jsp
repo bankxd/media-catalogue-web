@@ -34,18 +34,11 @@
 					</h1>
 					<hr>
 					<div id="formdiv">
-						<label><b>Title</b></label><br> <input type="text"
-							placeholder="<%= dvd.getTitle() %>" name="titlefield" required><br>
-						<label><b>Duration</b></label><br> <input type="text"
-							placeholder="<%= dvd.getLength() %>" name="lengthfield" required><br>
-						<label><b>Genre</b></label><br> <input type="text"
-							placeholder="<%= dvd.getGenre() %>" name="genrefield" required><br>
-
-						<label><b>Lead Actor</b></label><br> <input type="text"
-							placeholder="<%= dvd.getLeadActor() %>" name="leadactorfield" required><br>
-
-						<label><b>Lead Actress</b></label><br> <input type="text"
-							placeholder="<%= dvd.getLeadActress()  %>" name="leadactressfield" required><br>
+						<label><b>Title</b></label><br> <input type="text" placeholder="<%= dvd.getTitle() %>" name="titlefield" required><br>
+						<label><b>Duration</b></label><br> <input type="text" name="lengthfield" required><br>
+						<label><b>Genre</b></label><br> <input type="text"  name="genrefield" required><br>
+						<label><b>Lead Actor</b></label><br> <input type="text" name="leadactorfield" required><br>
+						<label><b>Lead Actress</b></label><br> <input type="text" name="leadactressfield" required><br>
 						<br>
 					</div>
 				</form>

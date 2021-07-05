@@ -1,14 +1,37 @@
 package za.co.sfy.domain;
 
-public class DVD extends MediaType {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "dvdtable")
+public class DVD extends MediaType implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private String leadActor;
 	private String leadActress;
-	
-	public DVD(String title) {
-		super(title);
-	}
-	
+
 	public DVD() {
+	}
+
+	public DVD(String title, int length, String genre, String leadActor, String leadActress) {
+		super(title, length, genre);
+		this.leadActor = leadActor;
+		this.leadActress = leadActress;
+	}
+
+	@Override
+	public int getId() {
+		return super.getId();
+	}
+
+	@Override
+	public void setId(int id) {
+		super.setId(id);
 	}
 
 	@Override
@@ -41,16 +64,7 @@ public class DVD extends MediaType {
 		super.setGenre(genre);
 	}
 
-	@Override
-	public MediaType getType() {
-		return super.getType();
-	}
-
-	@Override
-	public void setType(MediaType type) {
-		super.setType(type);
-	}
-
+	@Column(name = "leadactor")
 	public String getLeadActor() {
 		return leadActor;
 	}
@@ -59,6 +73,7 @@ public class DVD extends MediaType {
 		this.leadActor = leadActor;
 	}
 
+	@Column(name = "leadactress")
 	public String getLeadActress() {
 		return leadActress;
 	}

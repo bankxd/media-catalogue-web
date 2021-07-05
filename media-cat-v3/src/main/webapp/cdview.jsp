@@ -21,8 +21,10 @@
 				<a><img src="Images/mediaCatImg.png" /></a>
 			</div>
 			<div class="w3-twothird" style="text-decoration: none;" id="navBar">
-				<a href="index.jsp" id="navelement">Home</a> <a href="about.jsp" id="navelement">About</a>
-				<a href="cataloguehome.jsp" id="navelement">Catalogue</a> <a href="websettings.jsp" id="navelement">Web-Settings</a>
+				<a href="index.jsp" id="navelement">Home</a> <a href="about.jsp"
+					id="navelement">About</a> <a href="cataloguehome.jsp"
+					id="navelement">Catalogue</a> <a href="websettings.jsp"
+					id="navelement">Web-Settings</a>
 			</div>
 		</div>
 		<div id="midbar">
@@ -56,11 +58,11 @@
 								<td><%=cd.getTitle()%></td>
 								<td><%=cd.getGenre()%></td>
 								<td><%=cd.getLength()%></td>
-								<td><%=cd.getTracks() %></td>
+								<td><%=cd.getTracks()%></td>
 								<td><%=cd.getArtists().toString().replaceAll("\\[|\\]", "")%></td>
 								<form action="server" method="POST">
-									<input type="hidden" name="cdtitle"
-										value="<%=cd.getTitle()%>">
+									<input type="hidden" name="cdtitle" value="<%=cd.getTitle()%>">
+									<input type="hidden" name="cdid" value="<%=cd.getId()%>">
 									<td><button type="submit" name="tablebut" value="updatecd">U</button></td>
 									<td><button type="submit" name="tablebut" value="deletecd">D</button></td>
 								</form>
@@ -79,13 +81,16 @@
 		</div>
 	</div>
 </body>
-<% ApplicationSettings appSett = (ApplicationSettings) request.getSession().getAttribute("ApplicationSettings"); %>
+<%
+ApplicationSettings appSett = (ApplicationSettings) request.getSession().getAttribute("ApplicationSettings");
+%>
 <style>
-html{
-    --theme-color-1: <%= appSett.getBackgroundColour1() %>;
-    --theme-color-2: <%= appSett.getBackgroundColour2() %>;
-    --font-style: <%= appSett.getFontStyle() %>;
+html { 
+	--theme-color-1: <%= appSett.getBackgroundColour1() %>;
+	--theme-color-2: <%= appSett.getBackgroundColour2() %>;
+	--font-style: <%= appSett.getFontStyle() %>;
 }
+
 body {
 	font-family: var(--font-style);
 	font-size: 15px;
@@ -153,9 +158,9 @@ body {
 }
 
 hr {
-    height: 0px;
-    border: none;
-    border-top: 1px solid black;
+	height: 0px;
+	border: none;
+	border-top: 1px solid black;
 	margin: 8px 7px 8px 7px;
 }
 

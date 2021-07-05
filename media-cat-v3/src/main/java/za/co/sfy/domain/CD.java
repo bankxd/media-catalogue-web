@@ -1,16 +1,41 @@
 package za.co.sfy.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CD extends MediaType {
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cdtable")
+@PrimaryKeyJoinColumn(name = "cd_artists")
+public class CD extends MediaType implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private int tracks;
 	private List<String> artists;
-	
-	public CD(String title) {
-		super(title);
-	}
 
 	public CD() {
+	}
+
+	public CD(String title, int length, String genre, int tracks, List<String> artists) {
+		super(title, length, genre);
+		this.tracks = tracks;
+		this.artists = artists;
+	}
+
+	@Override
+	public int getId() {
+		return super.getId();
+	}
+
+	@Override
+	public void setId(int id) {
+		super.setId(id);
 	}
 
 	@Override
@@ -43,16 +68,7 @@ public class CD extends MediaType {
 		super.setGenre(genre);
 	}
 
-	@Override
-	public MediaType getType() {
-		return super.getType();
-	}
-
-	@Override
-	public void setType(MediaType type) {
-		super.setType(type);
-	}
-
+	@Column(name = "tracks")
 	public int getTracks() {
 		return tracks;
 	}
@@ -61,6 +77,8 @@ public class CD extends MediaType {
 		this.tracks = tracks;
 	}
 
+	@ElementCollection(targetClass = String.class)
+	@Column(name = "artists")
 	public List<String> getArtists() {
 		return artists;
 	}

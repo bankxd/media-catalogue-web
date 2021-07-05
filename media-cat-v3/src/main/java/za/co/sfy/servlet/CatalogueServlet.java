@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import za.co.sfy.dataAccess.CatalogueResource;
-import za.co.sfy.dataAccess.CatalogueResourceInterface;
+import za.co.sfy.dataAccess.MediaCatalogueResource;
 import za.co.sfy.domain.ApplicationSettings;
 import za.co.sfy.domain.CD;
 import za.co.sfy.domain.DVD;
@@ -93,8 +92,7 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
-			List<MediaType> retrieveAllOfTypeCD = cr.retrieveAllOfType(new CD());
+			List<MediaType> retrieveAllOfTypeCD = new MediaCatalogueResource().retrieveAllOfType(new CD());
 			request.getSession().setAttribute("cdlist", retrieveAllOfTypeCD);
 			super.executeCommand(request, response, pageName);
 		}
@@ -104,8 +102,7 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
-			List<MediaType> retrieveAllOfTypeDVD = cr.retrieveAllOfType(new DVD());
+			List<MediaType> retrieveAllOfTypeDVD = new MediaCatalogueResource().retrieveAllOfType(new DVD());
 			request.getSession().setAttribute("dvdlist", retrieveAllOfTypeDVD);
 			super.executeCommand(request, response, pageName);
 		}
@@ -115,9 +112,12 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
 			String cdTitleU = (String) request.getParameter("cdtitle");
-			MediaType retrievedMediaTypeCD = cr.retrieveMediaType(new CD(cdTitleU));
+			int cdIdU = Integer.parseInt(request.getParameter("cdid"));
+			CD cd = new CD();
+			cd.setTitle(cdTitleU);
+			cd.setId(cdIdU);
+			MediaType retrievedMediaTypeCD = new MediaCatalogueResource().retrieveMediaType(cd);
 			request.getSession().setAttribute("selectedCDTitle", retrievedMediaTypeCD.getTitle());
 			request.getSession().setAttribute("selectedCD", retrievedMediaTypeCD);
 			super.executeCommand(request, response, pageName);
@@ -128,9 +128,12 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
 			String dvdTitleU = (String) request.getParameter("dvdtitle");
-			MediaType retrievedMediaTypeDVD = cr.retrieveMediaType(new DVD(dvdTitleU));
+			int dvdIdU = Integer.parseInt(request.getParameter("dvdid"));
+			DVD dvd = new DVD();
+			dvd.setTitle(dvdTitleU);
+			dvd.setId(dvdIdU);
+			MediaType retrievedMediaTypeDVD = new MediaCatalogueResource().retrieveMediaType(dvd);
 			request.getSession().setAttribute("selectedDVDTitle", retrievedMediaTypeDVD.getTitle());
 			request.getSession().setAttribute("selectedDVD", retrievedMediaTypeDVD);
 			super.executeCommand(request, response, pageName);
@@ -153,10 +156,8 @@ public class CatalogueServlet extends HttpServlet {
 				list.add(artist);
 			}
 			cd.setArtists(list);
-			String cdtitle = (String) request.getSession().getAttribute("selectedCDTitle");
-			CatalogueResourceInterface cr = new CatalogueResource();
-			cr.update(cd, cdtitle);
-			List<MediaType> retrieveAllOfTypeCDU = cr.retrieveAllOfType(new CD());
+			new MediaCatalogueResource().updateMediaType(cd);
+			List<MediaType> retrieveAllOfTypeCDU = new MediaCatalogueResource().retrieveAllOfType(new CD());
 			request.getSession().setAttribute("cdlist", retrieveAllOfTypeCDU);
 			super.executeCommand(request, response, pageName);
 		}
@@ -172,10 +173,8 @@ public class CatalogueServlet extends HttpServlet {
 			dvd.setGenre(request.getParameter("genrefield"));
 			dvd.setLeadActor(request.getParameter("leadactorfield"));
 			dvd.setLeadActress(request.getParameter("leadactressfield"));
-			String dvdtitle = (String) request.getSession().getAttribute("selectedDVDTitle");
-			CatalogueResourceInterface cr = new CatalogueResource();
-			cr.update(dvd, dvdtitle);
-			List<MediaType> retrieveAllOfTypeDVDU = cr.retrieveAllOfType(new DVD());
+			new MediaCatalogueResource().updateMediaType(dvd);
+			List<MediaType> retrieveAllOfTypeDVDU = new MediaCatalogueResource().retrieveAllOfType(new DVD());
 			request.getSession().setAttribute("dvdlist", retrieveAllOfTypeDVDU);
 			super.executeCommand(request, response, pageName);
 		}
@@ -185,11 +184,11 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
 			String cdTitleD = (String) request.getParameter("cdtitle");
-			boolean deletecd = cr.delete(new CD(cdTitleD));
-			request.getSession().setAttribute("deleteResult", deletecd);
-			List<MediaType> retrieveAllOfTypeCD = cr.retrieveAllOfType(new CD());
+			CD cd = new CD();
+			cd.setTitle(cdTitleD);
+			new MediaCatalogueResource().deleteMediaType(cd);
+			List<MediaType> retrieveAllOfTypeCD = new MediaCatalogueResource().retrieveAllOfType(new CD());
 			request.getSession().setAttribute("cdlist", retrieveAllOfTypeCD);
 			super.executeCommand(request, response, pageName);
 		}
@@ -199,11 +198,11 @@ public class CatalogueServlet extends HttpServlet {
 
 		@Override
 		public void executeCommand(HttpServletRequest request, HttpServletResponse response, String pageName) {
-			CatalogueResourceInterface cr = new CatalogueResource();
 			String dvdTitleD = (String) request.getParameter("dvdtitle");
-			boolean deletedvd = cr.delete(new DVD(dvdTitleD));
-			request.getSession().setAttribute("deleteResult", deletedvd);
-			List<MediaType> retrieveAllOfTypeDVDD = cr.retrieveAllOfType(new DVD());
+			DVD dvd = new DVD();
+			dvd.setTitle(dvdTitleD);
+			new MediaCatalogueResource().deleteMediaType(dvd);
+			List<MediaType> retrieveAllOfTypeDVDD = new MediaCatalogueResource().retrieveAllOfType(new DVD());
 			request.getSession().setAttribute("dvdlist", retrieveAllOfTypeDVDD);
 			super.executeCommand(request, response, pageName);
 		}
@@ -241,8 +240,7 @@ public class CatalogueServlet extends HttpServlet {
 				lista.add(artist);
 			}
 			cdadd.setArtists(lista);
-			CatalogueResourceInterface cr = new CatalogueResource();
-			cr.create(cdadd);
+			new MediaCatalogueResource().createMediaType(cdadd);
 			super.executeCommand(request, response, pageName);
 		}
 	}
@@ -257,8 +255,7 @@ public class CatalogueServlet extends HttpServlet {
 			dvdadd.setGenre(request.getParameter("genrefielddvdadd"));
 			dvdadd.setLeadActor(request.getParameter("leadactorfielddvdadd"));
 			dvdadd.setLeadActress(request.getParameter("leadactressfielddvdadd"));
-			CatalogueResourceInterface cr = new CatalogueResource();
-			cr.create(dvdadd);
+			new MediaCatalogueResource().createMediaType(dvdadd);
 			super.executeCommand(request, response, pageName);
 		}
 	}
